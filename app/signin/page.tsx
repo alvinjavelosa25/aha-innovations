@@ -127,7 +127,7 @@ export default async function SignInPage() {
           </div>
 
           <p className="mt-8 text-center text-sm text-zinc-600 dark:text-zinc-400">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link 
               href="/signup" 
               className="font-medium text-blue-600 hover:text-blue-500"
