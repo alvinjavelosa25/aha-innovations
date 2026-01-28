@@ -1,0 +1,101 @@
+/* Custom CSS for GHL form iframe */
+
+/* Target the iframe directly */
+.ghl-form-iframe {
+  background-color: transparent !important;
+}
+
+/* Target the form container inside the iframe */
+.ghl-form-iframe body,
+.ghl-form-iframe html,
+.ghl-form-iframe .container,
+.ghl-form-iframe .row,
+.ghl-form-iframe .col,
+.ghl-form-iframe form,
+.ghl-form-iframe .form-group,
+.ghl-form-iframe .form-control {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Remove any white backgrounds from the form */
+.ghl-form-iframe [style*="background-color: rgb(255, 255, 255)"],
+.ghl-form-iframe [style*="background-color:#fff"],
+.ghl-form-iframe [style*="background-color: #fff"],
+.ghl-form-iframe [style*="background-color:white"],
+.ghl-form-iframe [style*="background-color: white"],
+.ghl-form-iframe [style*="background: white"],
+.ghl-form-iframe [style*="background:white"],
+.ghl-form-iframe [style*="background: #fff"],
+.ghl-form-iframe [style*="background:#fff"] {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Hide the side columns */
+.ghl-form-iframe .col-md-3,
+.ghl-form-iframe .col-lg-3,
+.ghl-form-iframe .col-3,
+.ghl-form-iframe .col-sm-3,
+.ghl-form-iframe .col-xs-3,
+.ghl-form-iframe .offset-md-3,
+.ghl-form-iframe .offset-lg-3,
+.ghl-form-iframe .offset-3,
+.ghl-form-iframe .offset-sm-3,
+.ghl-form-iframe .offset-xs-3 {
+  display: none !important;
+  width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 0 !important;
+  flex: 0 0 0% !important;
+}
+
+/* Make the center column take full width */
+.ghl-form-iframe .col-md-6,
+.ghl-form-iframe .col-lg-6,
+.ghl-form-iframe .col-6,
+.ghl-form-iframe .col-sm-6,
+.ghl-form-iframe .col-xs-6 {
+  flex: 0 0 100% !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Style the form inputs */
+.ghl-form-iframe input,
+.ghl-form-iframe select,
+.ghl-form-iframe textarea {
+  background-color: rgba(26, 31, 44, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  border-radius: 8px !important;
+  padding: 12px !important;
+}
+
+/* Style the form labels */
+.ghl-form-iframe label,
+.ghl-form-iframe p,
+.ghl-form-iframe span {
+  color: white !important;
+}
+
+/* Style the submit button */
+.ghl-form-iframe button,
+.ghl-form-iframe .btn,
+.ghl-form-iframe .btn-primary {
+  background-color: #ea384c !important;
+  border: none !important;
+  color: white !important;
+  border-radius: 8px !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Force transparent background on all elements */
+.ghl-form-iframe * {
+  background-color: transparent !important;
+}

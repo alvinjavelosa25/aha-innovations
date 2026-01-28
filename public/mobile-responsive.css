@@ -1,0 +1,178 @@
+/* Mobile Responsive Enhancements for AHA Innovations Launchpad */
+
+/* Ensure proper viewport behavior */
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+/* Touch target improvements */
+button, 
+input[type="submit"], 
+input[type="button"], 
+.btn {
+  min-height: 44px;
+  min-width: 44px;
+  touch-action: manipulation;
+}
+
+/* Form input improvements for mobile */
+input, 
+select, 
+textarea {
+  font-size: 16px; /* Prevents zoom on iOS */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Mobile-specific spacing */
+@media (max-width: 768px) {
+  /* Reduce padding on small screens */
+  .p-8 {
+    padding: 1rem !important;
+  }
+  
+  .p-6 {
+    padding: 0.75rem !important;
+  }
+  
+  .p-4 {
+    padding: 0.5rem !important;
+  }
+  
+  /* Improve form spacing */
+  .space-y-5 > * + * {
+    margin-top: 1rem !important;
+  }
+  
+  .gap-5 {
+    gap: 0.75rem !important;
+  }
+  
+  /* Ensure proper iframe sizing */
+  iframe {
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 400px !important;
+  }
+  
+  /* Improve text sizing */
+  .text-2xl {
+    font-size: 1.25rem !important;
+  }
+  
+  .text-xl {
+    font-size: 1.125rem !important;
+  }
+  
+  /* Better button sizing */
+  .py-4 {
+    padding-top: 0.875rem !important;
+    padding-bottom: 0.875rem !important;
+  }
+
+  .px-6 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Pricing section mobile improvements */
+  [data-pricing-section] {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+
+  /* Countdown timer mobile improvements */
+  .countdown-timer {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+
+  /* Pricing cards mobile improvements */
+  .glass-card {
+    margin-bottom: 1rem !important;
+  }
+
+  /* Better text wrapping for mobile */
+  h1, h2, h3 {
+    word-wrap: break-word !important;
+    hyphens: auto !important;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  /* Further reduce spacing */
+  .p-8, .p-6, .p-4 {
+    padding: 0.5rem !important;
+  }
+  
+  /* Smaller text on very small screens */
+  .text-2xl {
+    font-size: 1.125rem !important;
+  }
+  
+  .text-xl {
+    font-size: 1rem !important;
+  }
+  
+  /* Compact form elements */
+  .space-y-5 > * + * {
+    margin-top: 0.75rem !important;
+  }
+  
+  .gap-5 {
+    gap: 0.5rem !important;
+  }
+  
+  /* Smaller iframe on very small screens */
+  iframe {
+    min-height: 350px !important;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  /* Reduce vertical spacing in landscape */
+  .min-h-screen {
+    min-height: auto !important;
+  }
+  
+  iframe {
+    min-height: 300px !important;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Ensure crisp rendering on retina displays */
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Focus improvements for accessibility */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: 2px solid #e11d48;
+  outline-offset: 2px;
+}
+
+/* Prevent horizontal scroll */
+body {
+  overflow-x: hidden;
+}
+
+/* Improve tap targets */
+a, button, input, select, textarea {
+  -webkit-tap-highlight-color: rgba(225, 29, 72, 0.3);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}

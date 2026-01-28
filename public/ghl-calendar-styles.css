@@ -1,0 +1,199 @@
+/* AHA-Innovations GHL Calendar Custom Styles */
+
+/* Override GHL default colors with AHA brand colors */
+:root {
+  --aha-red: #ea384c !important;
+  --aha-dark-red: #d32f2f !important;
+  --aha-dark: #0F0F0F !important;
+}
+
+/* GHL Calendar specific selectors */
+.calendar-container,
+.booking-calendar {
+  font-family: 'Gotham', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+/* Header and title styling */
+.header, .title, h1, h2, h3, h4, h5, h6 {
+  color: white !important;
+  font-family: 'Gotham', sans-serif !important;
+}
+
+/* Primary buttons - use AHA red */
+.btn-primary, 
+.primary-button,
+.book-button,
+.submit-button,
+[class*="primary"],
+button[type="submit"] {
+  background-color: var(--aha-red) !important;
+  border-color: var(--aha-red) !important;
+  color: white !important;
+}
+
+.btn-primary:hover,
+.primary-button:hover,
+.book-button:hover,
+.submit-button:hover,
+[class*="primary"]:hover,
+button[type="submit"]:hover {
+  background-color: var(--aha-dark-red) !important;
+  border-color: var(--aha-dark-red) !important;
+}
+
+/* Calendar grid and date cells */
+.calendar-grid,
+.date-cell,
+.time-slot {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+}
+
+/* Selected date/time styling */
+.selected,
+.active,
+.date-cell.selected,
+.time-slot.selected {
+  background-color: var(--aha-red) !important;
+  color: white !important;
+  border-color: var(--aha-red) !important;
+}
+
+/* Form inputs */
+input, 
+select, 
+textarea {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  border-radius: 8px !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Form labels */
+label {
+  color: white !important;
+  font-family: 'Gotham', sans-serif !important;
+}
+
+/* Cards and containers */
+.card,
+.container,
+.booking-container {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+}
+
+/* Navigation arrows and controls */
+.nav-arrow,
+.calendar-nav,
+.prev-button,
+.next-button {
+  color: var(--aha-red) !important;
+}
+
+.nav-arrow:hover,
+.calendar-nav:hover,
+.prev-button:hover,
+.next-button:hover {
+  color: var(--aha-dark-red) !important;
+  background-color: rgba(234, 56, 76, 0.1) !important;
+}
+
+/* Time slots */
+.time-slot {
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: white !important;
+}
+
+.time-slot:hover {
+  background-color: rgba(234, 56, 76, 0.2) !important;
+  border-color: var(--aha-red) !important;
+}
+
+/* Success/confirmation messages */
+.success-message,
+.confirmation {
+  background-color: rgba(76, 175, 80, 0.2) !important;
+  border-color: #4caf50 !important;
+  color: white !important;
+}
+
+/* Error messages */
+.error-message,
+.validation-error {
+  background-color: rgba(244, 67, 54, 0.2) !important;
+  border-color: #f44336 !important;
+  color: white !important;
+}
+
+/* Loading states */
+.loading,
+.spinner {
+  border-color: var(--aha-red) !important;
+}
+
+/* Override any white backgrounds in calendar elements */
+.calendar-container *, .booking-calendar *, .booking-widget *, .calendar-widget * {
+  background-color: transparent !important;
+}
+
+/* Ensure main container has dark background */
+.main-container,
+.booking-widget,
+.calendar-widget {
+  background-color: #0F0F0F !important;
+}
+
+/* Text color overrides */
+p, span, div, td, th {
+  color: white !important;
+}
+
+/* Link styling */
+a {
+  color: var(--aha-red) !important;
+}
+
+a:hover {
+  color: var(--aha-dark-red) !important;
+}
+
+/* Calendar month/year headers */
+.month-header,
+.year-header,
+.calendar-header {
+  color: white !important;
+  font-family: 'Gotham', sans-serif !important;
+  font-weight: 600 !important;
+}
+
+/* Day names (Mon, Tue, Wed, etc.) */
+.day-name,
+.weekday-header {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-family: 'Gotham', sans-serif !important;
+}
+
+/* Disabled dates */
+.disabled,
+.unavailable {
+  color: rgba(255, 255, 255, 0.3) !important;
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* Focus states */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: 2px solid var(--aha-red) !important;
+  outline-offset: 2px !important;
+}

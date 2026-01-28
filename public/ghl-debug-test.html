@@ -1,0 +1,99 @@
+<script>
+/**
+ * GHL Debug Test - Simple version to see what's on the page
+ */
+(function() {
+    'use strict';
+    
+    console.log('=== GHL DEBUG TEST STARTED ===');
+    
+    function debugPage() {
+        console.log('Current URL:', window.location.href);
+        console.log('URL Parameters:', window.location.search);
+        
+        // Find all buttons
+        const allButtons = document.querySelectorAll('button');
+        console.log('Found ' + allButtons.length + ' buttons:');
+        
+        for (let i = 0; i < allButtons.length; i++) {
+            const btn = allButtons[i];
+            console.log('Button ' + i + ':', {
+                text: (btn.textContent || btn.innerText || '').trim(),
+                classes: btn.className,
+                id: btn.id,
+                type: btn.type,
+                visible: btn.offsetParent !== null
+            });
+        }
+        
+        // Find all clickable elements
+        const clickables = document.querySelectorAll('[role="button"], div[onclick], span[onclick]');
+        console.log('Found ' + clickables.length + ' other clickable elements:');
+        
+        for (let j = 0; j < clickables.length; j++) {
+            const el = clickables[j];
+            console.log('Clickable ' + j + ':', {
+                text: (el.textContent || el.innerText || '').trim(),
+                classes: el.className,
+                tag: el.tagName,
+                visible: el.offsetParent !== null
+            });
+        }
+        
+        // Look for Google-related elements
+        const googleElements = document.querySelectorAll('*');
+        const googleFound = [];
+        
+        for (let k = 0; k < googleElements.length; k++) {
+            const el = googleElements[k];
+            const text = (el.textContent || el.innerText || '').toLowerCase();
+            
+            if (text.includes('google') || text.includes('sign in with')) {
+                googleFound.push({
+                    tag: el.tagName,
+                    text: text.trim(),
+                    classes: el.className,
+                    visible: el.offsetParent !== null
+                });
+            }
+        }
+        
+        console.log('Google-related elements:', googleFound);
+        
+        // Try to find and click the Google button
+        setTimeout(function() {
+            console.log('=== ATTEMPTING TO FIND GOOGLE BUTTON ===');
+            
+            const googleBtn = document.querySelector('button');
+            if (googleBtn) {
+                const btnText = (googleBtn.textContent || googleBtn.innerText || '').trim();
+                console.log('First button found:', btnText);
+                
+                if (btnText.toLowerCase().includes('google')) {
+                    console.log('This appears to be the Google button, clicking it...');
+                    
+                    // Show visual feedback
+                    googleBtn.style.border = '3px solid red';
+                    googleBtn.style.backgroundColor = 'yellow';
+                    
+                    setTimeout(function() {
+                        googleBtn.click();
+                        console.log('Button clicked!');
+                    }, 2000);
+                }
+            }
+        }, 3000);
+    }
+    
+    // Run debug when page loads
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', debugPage);
+    } else {
+        debugPage();
+    }
+    
+    // Also run after a delay
+    setTimeout(debugPage, 2000);
+    
+})();
+</script>

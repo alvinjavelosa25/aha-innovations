@@ -1,0 +1,110 @@
+<script>
+/**
+ * GHL Signup Link Script
+ * Adds "No account yet? Sign up here" link to GHL login page
+ */
+(function() {
+    'use strict';
+    
+    console.log('GHL Signup Link Script loaded');
+    
+    function addSignupLink() {
+        // Check if link already exists
+        if (document.getElementById('custom-signup-link')) {
+            console.log('Signup link already exists');
+            return;
+        }
+        
+        // Find the login form container
+        const loginForm = document.querySelector('.hl_login') || 
+                         document.querySelector('.login-form') || 
+                         document.querySelector('form') ||
+                         document.querySelector('.hl_login--body');
+        
+        if (!loginForm) {
+            console.log('Login form not found, retrying...');
+            return false;
+        }
+        
+        console.log('Found login form, adding signup link');
+        
+        // Create the signup link container
+        const signupContainer = document.createElement('div');
+        signupContainer.id = 'custom-signup-link';
+        signupContainer.style.cssText = 'text-align: center; margin-top: 24px; padding: 15px; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 24px;';
+        
+        // Create the signup link with styling matching your signup page
+        const signupLink = document.createElement('a');
+        signupLink.href = 'https://www.aha-innovations.com/signup';
+        signupLink.target = '_blank';
+        signupLink.style.cssText = 'color: #ffffff; text-decoration: none; padding: 12px 24px; border: 2px solid #ffffff; border-radius: 8px; background: transparent; transition: all 0.3s ease; display: inline-block; font-size: 14px; font-weight: 500; cursor: pointer;';
+        signupLink.innerHTML = 'No account yet? <strong>Sign up here</strong>';
+
+        // Add hover effects that match your signup page button style
+        signupLink.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = '#ffffff';
+            this.style.color = '#1a1a1a';
+            this.style.transform = 'translateY(-2px)';
+            this.style.boxShadow = '0 4px 12px rgba(255, 255, 255, 0.3)';
+        });
+
+        signupLink.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = 'transparent';
+            this.style.color = '#ffffff';
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'none';
+        });
+        
+        // Add click tracking
+        signupLink.addEventListener('click', function() {
+            console.log('Signup link clicked - redirecting to signup page');
+        });
+        
+        // Add the link to the container
+        signupContainer.appendChild(signupLink);
+        
+        // Insert the signup link after the login form
+        if (loginForm.parentNode) {
+            loginForm.parentNode.insertBefore(signupContainer, loginForm.nextSibling);
+        } else {
+            // Fallback: append to body
+            document.body.appendChild(signupContainer);
+        }
+        
+        console.log('Signup link added successfully');
+        return true;
+    }
+    
+    // Try to add the signup link
+    function attemptAddSignupLink() {
+        let attempts = 0;
+        const maxAttempts = 10;
+        
+        const checkAndAdd = setInterval(function() {
+            attempts++;
+            console.log('Attempting to add signup link (attempt ' + attempts + '/' + maxAttempts + ')');
+            
+            if (addSignupLink()) {
+                clearInterval(checkAndAdd);
+                return;
+            }
+            
+            if (attempts >= maxAttempts) {
+                clearInterval(checkAndAdd);
+                console.log('Failed to add signup link after ' + maxAttempts + ' attempts');
+            }
+        }, 1000);
+    }
+    
+    // Initialize
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', attemptAddSignupLink);
+    } else {
+        attemptAddSignupLink();
+    }
+    
+    // Also try after a delay
+    setTimeout(attemptAddSignupLink, 2000);
+    
+})();
+</script>

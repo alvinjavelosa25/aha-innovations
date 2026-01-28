@@ -1,0 +1,150 @@
+<script>
+/**
+ * GHL Signup Link Script - Final Version
+ * Adds "No account yet? Sign up here" link to GHL login page
+ * Matches your signup page styling with white button and hover effects
+ */
+(function() {
+    'use strict';
+    
+    console.log('GHL Signup Link Script v2.0 loaded');
+    
+    function addSignupLink() {
+        // Check if link already exists
+        if (document.getElementById('custom-signup-link')) {
+            console.log('Signup link already exists');
+            return true;
+        }
+        
+        // Find the login form container - try multiple selectors
+        const selectors = [
+            '.hl_login--body',
+            '.hl_login .card-body',
+            '.card-body',
+            'form',
+            '.hl_login form',
+            '.hl_login .card',
+            '[class*="login"] form',
+            '[class*="card-body"]'
+        ];
+        
+        let loginForm = null;
+        for (let i = 0; i < selectors.length; i++) {
+            loginForm = document.querySelector(selectors[i]);
+            if (loginForm) {
+                console.log('Found login form with selector: ' + selectors[i]);
+                break;
+            }
+        }
+        
+        if (!loginForm) {
+            console.log('Login form not found, retrying...');
+            return false;
+        }
+        
+        console.log('Adding signup link to login form');
+        
+        // Create the signup link container
+        const signupContainer = document.createElement('div');
+        signupContainer.id = 'custom-signup-link';
+        signupContainer.style.cssText = 'text-align: center; margin-top: 24px; padding: 15px; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 24px;';
+        
+        // Create the signup link with styling matching your signup page
+        const signupLink = document.createElement('a');
+        signupLink.href = 'https://www.aha-innovations.com/signup';
+        signupLink.target = '_blank';
+        signupLink.style.cssText = 'color: #ffffff; text-decoration: none; padding: 12px 24px; border: 2px solid #ffffff; border-radius: 8px; background: transparent; transition: all 0.3s ease; display: inline-block; font-size: 14px; font-weight: 500; cursor: pointer;';
+        signupLink.innerHTML = 'No account yet? <strong>Sign up here</strong>';
+        
+        // Add hover effects that match your signup page button style
+        signupLink.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = '#ffffff';
+            this.style.color = '#1a1a1a';
+            this.style.transform = 'translateY(-2px)';
+            this.style.boxShadow = '0 4px 12px rgba(255, 255, 255, 0.3)';
+        });
+        
+        signupLink.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = 'transparent';
+            this.style.color = '#ffffff';
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'none';
+        });
+        
+        // Add click tracking
+        signupLink.addEventListener('click', function(e) {
+            console.log('Signup link clicked - redirecting to signup page');
+            
+            // Optional: Add a small delay to show the click effect
+            e.preventDefault();
+            setTimeout(function() {
+                window.open('https://www.aha-innovations.com/signup', '_blank');
+            }, 150);
+        });
+        
+        // Add the link to the container
+        signupContainer.appendChild(signupLink);
+        
+        // Insert the signup link after the login form
+        if (loginForm.parentNode) {
+            loginForm.parentNode.insertBefore(signupContainer, loginForm.nextSibling);
+        } else {
+            // Fallback: append to the login form itself
+            loginForm.appendChild(signupContainer);
+        }
+        
+        console.log('Signup link added successfully');
+        return true;
+    }
+    
+    // Try to add the signup link with retries
+    function attemptAddSignupLink() {
+        let attempts = 0;
+        const maxAttempts = 15;
+        
+        const checkAndAdd = setInterval(function() {
+            attempts++;
+            console.log('Attempting to add signup link (attempt ' + attempts + '/' + maxAttempts + ')');
+            
+            if (addSignupLink()) {
+                clearInterval(checkAndAdd);
+                return;
+            }
+            
+            if (attempts >= maxAttempts) {
+                clearInterval(checkAndAdd);
+                console.log('Failed to add signup link after ' + maxAttempts + ' attempts');
+                
+                // Final fallback: add to body
+                if (!document.getElementById('custom-signup-link')) {
+                    console.log('Adding signup link to body as final fallback');
+                    const fallbackContainer = document.createElement('div');
+                    fallbackContainer.id = 'custom-signup-link';
+                    fallbackContainer.style.cssText = 'position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; text-align: center;';
+                    
+                    const fallbackLink = document.createElement('a');
+                    fallbackLink.href = 'https://www.aha-innovations.com/signup';
+                    fallbackLink.target = '_blank';
+                    fallbackLink.style.cssText = 'color: #ffffff; text-decoration: none; padding: 12px 24px; border: 2px solid #ffffff; border-radius: 8px; background: rgba(0, 0, 0, 0.8); transition: all 0.3s ease; display: inline-block; font-size: 14px; font-weight: 500; cursor: pointer; backdrop-filter: blur(10px);';
+                    fallbackLink.innerHTML = 'No account yet? <strong>Sign up here</strong>';
+                    
+                    fallbackContainer.appendChild(fallbackLink);
+                    document.body.appendChild(fallbackContainer);
+                }
+            }
+        }, 1000);
+    }
+    
+    // Initialize
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', attemptAddSignupLink);
+    } else {
+        attemptAddSignupLink();
+    }
+    
+    // Also try after delays to catch dynamically loaded content
+    setTimeout(attemptAddSignupLink, 2000);
+    setTimeout(attemptAddSignupLink, 5000);
+    
+})();
+</script>

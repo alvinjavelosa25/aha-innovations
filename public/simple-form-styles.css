@@ -1,0 +1,67 @@
+/* Simple Form Styles */
+
+/* Set transparent background for all elements */
+body, html, div, form, iframe, .container, .container-fluid, .row, .col,
+.form-box, .form-content, .form-wrapper, .form-group, .form-control,
+.card, .card-body, .card-header, .card-footer, .modal, .modal-content,
+.modal-body, .modal-header, .modal-footer, .hightouch-form-container,
+*, *::before, *::after {
+  background-color: transparent !important;
+  background: transparent !important;
+  color: white !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Style form fields */
+input, select, textarea, .form-control {
+  background-color: rgba(26, 31, 44, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  border-radius: 8px !important;
+  padding: 12px !important;
+}
+
+/* Style labels */
+label {
+  color: white !important;
+  font-weight: 500 !important;
+}
+
+/* Style the submit button in forms */
+iframe .btn-primary, iframe button[type="submit"],
+.ghl-form .btn-primary, .ghl-form button[type="submit"],
+.form-container .btn-primary, .form-container button[type="submit"] {
+  background-color: #ea384c !important;
+  border-color: #ea384c !important;
+  color: white !important;
+  border-radius: 8px !important;
+  font-weight: bold !important;
+  padding: 12px 20px !important;
+  transition: all 0.3s ease !important;
+}
+
+iframe .btn-primary:hover, iframe button[type="submit"]:hover,
+.ghl-form .btn-primary:hover, .ghl-form button[type="submit"]:hover,
+.form-container .btn-primary:hover, .form-container button[type="submit"]:hover {
+  background-color: #c4162a !important;
+  border-color: #c4162a !important;
+}
+
+/* Remove any white backgrounds */
+[style*="background-color: rgb(255, 255, 255)"],
+[style*="background-color:#fff"],
+[style*="background-color: #fff"],
+[style*="background-color:white"],
+[style*="background-color: white"],
+[style*="background: white"],
+[style*="background:white"],
+[style*="background: #fff"],
+[style*="background:#fff"] {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Force transparent background on form elements */
+iframe *, .ghl-form *, .form-container *, .hightouch-form-container * {
+  background-color: transparent !important;
+}

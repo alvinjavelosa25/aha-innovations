@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test GHL Locations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #dc2626;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        button:hover {
+            background-color: #b91c1c;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .success {
+            border-left: 4px solid #10b981;
+        }
+        .error {
+            border-left: 4px solid #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test GHL Locations API</h1>
+        <p>This will fetch your GHL locations to get valid Location IDs for testing.</p>
+        
+        <button onclick="fetchLocations()">Fetch GHL Locations</button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function fetchLocations() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Loading...';
+            resultDiv.className = '';
+
+            try {
+                console.log('Fetching GHL locations...');
+                
+                const response = await fetch('/api/get-ghl-locations', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                console.log('Response status:', response.status);
+
+                let data;
+                const responseText = await response.text();
+                console.log('Raw response:', responseText);
+
+                try {
+                    data = JSON.parse(responseText);
+                } catch (parseError) {
+                    throw new Error(`Failed to parse JSON response: ${responseText}`);
+                }
+
+                if (data.success) {
+                    resultDiv.className = 'success';
+                    resultDiv.textContent = `SUCCESS!\n\nLocations found:\n${JSON.stringify(data.locations, null, 2)}`;
+                    
+                    // Extract location IDs for easy copying
+                    if (data.locations && Array.isArray(data.locations)) {
+                        const locationIds = data.locations.map(loc => `${loc.name}: ${loc.id}`).join('\n');
+                        resultDiv.textContent += `\n\nLocation IDs for testing:\n${locationIds}`;
+                    }
+                } else {
+                    resultDiv.className = 'error';
+                    resultDiv.textContent = `ERROR: ${data.message}\n\nDetails:\n${JSON.stringify(data, null, 2)}`;
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.className = 'error';
+                resultDiv.textContent = `ERROR: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

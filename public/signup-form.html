@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up Form</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #0f0f13;
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-field {
+      margin-bottom: 20px;
+    }
+    .form-field.full-width {
+      grid-column: span 2;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-bottom: 1px solid #333;
+      background-color: transparent;
+      color: white;
+      font-size: 16px;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-bottom-color: #e74c3c;
+    }
+    button {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #c0392b;
+    }
+    .required:after {
+      content: " *";
+      color: #e74c3c;
+    }
+    .success-message {
+      display: none;
+      background-color: rgba(39, 174, 96, 0.2);
+      border-left: 4px solid #27ae60;
+      padding: 15px;
+      margin-top: 20px;
+    }
+    .error-message {
+      display: none;
+      background-color: rgba(231, 76, 60, 0.2);
+      border-left: 4px solid #e74c3c;
+      padding: 15px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Sign Up</h1>
+
+    <form id="signupForm">
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="firstName" class="required">First Name</label>
+          <input type="text" id="firstName" name="firstName" required>
+        </div>
+
+        <div class="form-field">
+          <label for="lastName" class="required">Last Name</label>
+          <input type="text" id="lastName" name="lastName" required>
+        </div>
+
+        <div class="form-field">
+          <label for="email" class="required">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-field">
+          <label for="phone" class="required">Phone</label>
+          <input type="tel" id="phone" name="phone" required>
+        </div>
+
+        <div class="form-field">
+          <label for="companyName">Company Name</label>
+          <input type="text" id="companyName" name="companyName">
+        </div>
+
+        <div class="form-field">
+          <label for="companySize">Company Size</label>
+          <select id="companySize" name="companySize">
+            <option value="">Select...</option>
+            <option value="1-10">1-10 employees</option>
+            <option value="11-50">11-50 employees</option>
+            <option value="51-200">51-200 employees</option>
+            <option value="201-500">201-500 employees</option>
+            <option value="501+">501+ employees</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="city">City</label>
+          <input type="text" id="city" name="city">
+        </div>
+
+        <div class="form-field">
+          <label for="state">State/Province</label>
+          <input type="text" id="state" name="state">
+        </div>
+
+        <div class="form-field">
+          <label for="country">Country</label>
+          <input type="text" id="country" name="country">
+        </div>
+
+        <div class="form-field">
+          <label for="goal" class="required">What do you want to achieve?</label>
+          <select id="goal" name="goal" required>
+            <option value="">Select...</option>
+            <option value="grow_business">Grow my business</option>
+            <option value="get_clients">Get more clients</option>
+            <option value="automate">Automate my business</option>
+            <option value="scale">Scale my agency</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-field full-width">
+          <label for="goalDetails">Please describe your goal</label>
+          <textarea id="goalDetails" name="goalDetails" rows="3"></textarea>
+        </div>
+      </div>
+
+      <button type="submit" id="submitButton">Start Your Trial Now</button>
+    </form>
+
+    <div id="successMessage" class="success-message">
+      <h3>Thank you for signing up!</h3>
+      <p>Your account has been created successfully. Please check your email for instructions to set your password and access your account.</p>
+    </div>
+
+    <div id="errorMessage" class="error-message">
+      <h3>Oops! Something went wrong.</h3>
+      <p id="errorText">Please try again or contact support if the issue persists.</p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const submitButton = document.getElementById('submitButton');
+      submitButton.disabled = true;
+      submitButton.textContent = 'Creating your account...';
+
+      // Get form data
+      const formData = new FormData(this);
+      const formObject = {};
+      formData.forEach((value, key) => {
+        formObject[key] = value;
+      });
+
+      try {
+        // Use the Vercel-deployed webhook URL
+        const response = await fetch('https://ahasignup.vercel.app/api/webhook', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formObject),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          // Show success message
+          document.getElementById('signupForm').style.display = 'none';
+          document.getElementById('successMessage').style.display = 'block';
+        } else {
+          // Show error message
+          document.getElementById('errorText').textContent = result.message || 'Please try again or contact support.';
+          document.getElementById('errorMessage').style.display = 'block';
+          submitButton.disabled = false;
+          submitButton.textContent = 'Start Your Trial Now';
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('errorText').textContent = 'Network error. Please check your connection and try again.';
+        document.getElementById('errorMessage').style.display = 'block';
+        submitButton.disabled = false;
+        submitButton.textContent = 'Start Your Trial Now';
+      }
+    });
+  </script>
+</body>
+</html>

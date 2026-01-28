@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test GHL Contact Creation (Supabase Edge Function)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .security-note {
+            background-color: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #dc2626;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px 10px 0;
+        }
+        button:hover {
+            background-color: #b91c1c;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .success {
+            border-left: 4px solid #10b981;
+        }
+        .error {
+            border-left: 4px solid #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔒 Secure GHL Contact Creation</h1>
+        <div class="security-note">
+            <p><strong>✅ Fully Secure:</strong> This uses Supabase Edge Functions with server-side environment variables. No sensitive tokens are exposed to the frontend!</p>
+            <p><strong>🏷️ Tags Applied:</strong> signup, automated-creation, <strong>website_signups</strong>, api-created</p>
+        </div>
+        
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="locationId">Location ID (Required):</label>
+                <input type="text" id="locationId" name="locationId" placeholder="Get this from the locations test page" required>
+                <small>Use the secure locations test to get a valid Location ID</small>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email (Required):</label>
+                <input type="email" id="email" name="email" placeholder="test@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="firstName">First Name (Required):</label>
+                <input type="text" id="firstName" name="firstName" placeholder="John" required>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name (Required):</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+            </div>
+
+            <div class="form-group">
+                <label for="companyName">Company Name:</label>
+                <input type="text" id="companyName" name="companyName" placeholder="Acme Corp">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" placeholder="+1234567890">
+            </div>
+
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" placeholder="New York">
+            </div>
+
+            <div class="form-group">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" placeholder="NY">
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country" placeholder="US" value="US">
+            </div>
+
+            <div class="form-group">
+                <label for="postalCode">Postal Code:</label>
+                <input type="text" id="postalCode" name="postalCode" placeholder="10001">
+            </div>
+
+            <div class="form-group">
+                <label for="goal">Goal/Notes:</label>
+                <input type="text" id="goal" name="goal" placeholder="Testing automation">
+            </div>
+
+            <button type="button" onclick="createContact()">Create GHL Contact (Secure)</button>
+            <button type="button" onclick="createTestContact()">Use Test Data</button>
+        </form>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function createContact(useTestData = false) {
+            const resultDiv = document.getElementById('result');
+            const buttons = document.querySelectorAll('button');
+            
+            // Disable all buttons during submission
+            buttons.forEach(btn => btn.disabled = true);
+            
+            resultDiv.textContent = 'Creating contact...';
+            resultDiv.className = '';
+
+            try {
+                let contactData;
+                
+                if (useTestData) {
+                    contactData = {
+                        locationId: document.getElementById('locationId').value,
+                        email: 'test@example.com',
+                        firstName: 'Test',
+                        lastName: 'User',
+                        companyName: 'Test Company',
+                        phone: '+1234567890',
+                        city: 'Test City',
+                        state: 'CA',
+                        country: 'US',
+                        postalCode: '90210',
+                        goal: 'Testing automation'
+                    };
+                } else {
+                    const form = document.getElementById('contactForm');
+                    const formData = new FormData(form);
+                    
+                    contactData = {
+                        locationId: formData.get('locationId'),
+                        email: formData.get('email'),
+                        firstName: formData.get('firstName'),
+                        lastName: formData.get('lastName'),
+                        companyName: formData.get('companyName'),
+                        phone: formData.get('phone'),
+                        city: formData.get('city'),
+                        state: formData.get('state'),
+                        country: formData.get('country'),
+                        postalCode: formData.get('postalCode'),
+                        goal: formData.get('goal')
+                    };
+                }
+
+                console.log('Creating contact with data:', contactData);
+
+                const response = await fetch('https://fpratwslcktwpzlbzlhm.supabase.co/functions/v1/create-ghl-contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZwcmF0d3NsY2t0d3B6bGJ6bGhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0MTIwNjAsImV4cCI6MjA1OTk4ODA2MH0.fGZ9h7gKvfIknNS1Ru3sRmTUnROAnoAsdEGGySfA8ms'
+                    },
+                    body: JSON.stringify(contactData)
+                });
+
+                console.log('Response status:', response.status);
+
+                let data;
+                const responseText = await response.text();
+                console.log('Raw response:', responseText);
+
+                try {
+                    data = JSON.parse(responseText);
+                } catch (parseError) {
+                    throw new Error(`Failed to parse JSON response: ${responseText}`);
+                }
+
+                if (data.success) {
+                    resultDiv.className = 'success';
+                    let resultText = `SUCCESS! ✅\n\n`;
+                    resultText += `Contact created successfully!\n\n`;
+                    resultText += `Contact ID: ${data.contact.contact?.id || 'N/A'}\n`;
+                    resultText += `Email: ${data.contact.contact?.email || 'N/A'}\n`;
+                    resultText += `Name: ${data.contact.contact?.firstName} ${data.contact.contact?.lastName}\n`;
+                    resultText += `Tags Applied: ${data.contact.contact?.tags?.join(', ') || 'website_signups (applied via API)'}\n\n`;
+                    resultText += `✅ Your automation should trigger for contacts with 'website_signups' tag!\n\n`;
+                    resultText += `Full Response:\n${JSON.stringify(data.contact, null, 2)}`;
+                    
+                    resultDiv.textContent = resultText;
+                } else {
+                    resultDiv.className = 'error';
+                    resultDiv.textContent = `ERROR: ${data.error}\n\nDetails:\n${JSON.stringify(data, null, 2)}`;
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.className = 'error';
+                resultDiv.textContent = `ERROR: ${error.message}`;
+            } finally {
+                // Re-enable all buttons
+                buttons.forEach(btn => btn.disabled = false);
+            }
+        }
+
+        function createTestContact() {
+            createContact(true);
+        }
+    </script>
+</body>
+</html>
