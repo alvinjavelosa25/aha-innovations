@@ -13,7 +13,22 @@ import ModernFooter from "@/components/sections/ModernFooter";
 export default function Home() {
   return (
     <>
-      <ModernHero />
+      <ModernHero 
+        title="All-in-One Business Platform"
+        subtitle={
+          <a 
+            href="https://millennialbusinessinnovations.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hover:text-aha-red transition-colors"
+          >
+            Need custom solutions? Visit Millennial Business Innovations
+          </a>
+        }
+        description="Replace 10+ tools with one simple platform. Grow faster, work smarter."
+        ctaText="Get Started Free"
+        ctaLink="/signup"
+      />
       <TrustedCompanies />
       <PainPoints />
       <ModernFeatures />
